@@ -23,18 +23,11 @@
     </div>
 
 <script>
-    // --- 1. CONFIGURATION: UPDATED COLORS AND CHORDS ---
+    // --- 1. CONFIGURATION: ADJUST COLORS HERE ---
     const chordConfig = [
-        { 
-            name: "C Major (C E G)", 
-            notes: [261.63, 329.63, 392.00], 
-            color: "#FF0000" // Red 
-        },
-        { 
-            name: "F Major (C F A)", 
-            notes: [261.63, 349.23, 440.00], 
-            color: "#FFC0CB" // Pink
-        }
+        { name: "C Major", notes: [261.63, 329.63, 392.00], color: "#FF0000" }, // Red
+        { name: "F Major", notes: [349.23, 440.00, 523.25], color: "#FFFF00" }, // Yellow
+        { name: "G Major", notes: [392.00, 493.88, 587.33], color: "#0000FF" }  // Blue
     ];
 
     let currentChordIndex = null;
@@ -45,7 +38,7 @@
         frequencies.forEach(freq => {
             const osc = audioCtx.createOscillator();
             const gain = audioCtx.createGain();
-            osc.type = 'triangle'; 
+            osc.type = 'triangle'; // Softer, more piano-like than 'sine'
             osc.frequency.setValueAtTime(freq, audioCtx.currentTime);
             
             gain.gain.setValueAtTime(0.1, audioCtx.currentTime);
@@ -67,20 +60,14 @@
         const btn = document.createElement('button');
         btn.className = 'chord-btn';
         btn.style.backgroundColor = chord.color;
-        btn.title = chord.name; // Shows chord name on hover
         btn.onclick = () => checkAnswer(index);
         uiContainer.appendChild(btn);
     });
 
     document.getElementById('play-btn').onclick = () => {
-        // Resume AudioContext for browsers that block auto-play
-        if (audioCtx.state === 'suspended') {
-            audioCtx.resume();
-        }
         currentChordIndex = Math.floor(Math.random() * chordConfig.length);
         playTriad(chordConfig[currentChordIndex].notes);
         statusText.innerText = "Which color was that?";
-        statusText.style.color = "black";
     };
 
     function checkAnswer(index) {
