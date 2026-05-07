@@ -1,6 +1,3 @@
-I've updated the `chordConfig` array to match your request. I set the C Major (C E G) to red and the F Major (C F A) to pink. I also removed the third chord option from the original code so you only have these two to practice with.
-
-```html
 <!DOCTYPE html>
 <html lang="en">
 <head>
